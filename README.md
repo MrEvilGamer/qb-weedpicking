@@ -1,6 +1,8 @@
 # qb-weedpicking
 A weed picking Script for your server!
 
+Converted from esx_weed
+
 !IMPORTANT!
 
 Make sure to add these in qb-core/client/functions.lua
