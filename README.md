@@ -1,7 +1,13 @@
 # qb-weedpicking
 A weed picking Script for your server!
 
-Converted from esx_weed
+Converted from esx_drugs
+
+Real Script - 
+https://github.com/DoPeMan17/esx_drugs/blob/master/config.lua
+
+Author - 
+https://github.com/DoPeMan17
 
 !IMPORTANT!
 
