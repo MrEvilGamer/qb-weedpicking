@@ -41,8 +41,7 @@ AddEventHandler('qb-weedpicking:selld', function()
 	local Player = QBCore.Functions.GetPlayer(src)
 	local Item = Player.Functions.GetItemByName('weed_bag')
    
-	if Item.amount >= 1 then
-	if Player.Functions.GetItemByName('weed_bag') then
+	if Item ~= nil and Item.amount >= 1 then
 		local chance2 = math.random(1, 12)
 		if chance2 == 1 or chance2 == 2 or chance2 == 9 or chance2 == 4 or chance2 == 10 or chance2 == 6 or chance2 == 7 or chance2 == 8 then
 			Player.Functions.RemoveItem('weed_bag', 1)----change this
@@ -54,10 +53,7 @@ AddEventHandler('qb-weedpicking:selld', function()
 			TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['weed_bag'], "remove")
 			Player.Functions.AddMoney("cash", Config.Pricesell-100, "sold-pawn-items")
 			TriggerClientEvent('QBCore:Notify', src, 'you sold to the pusher', "success")
-		end 
-	else
-		TriggerClientEvent('QBCore:Notify', src, 'You don\'t have the right items', "error") 
-	end
+		end
 else
 	TriggerClientEvent('QBCore:Notify', src, 'You don\'t have the right items', "error") 
 	
@@ -90,7 +86,7 @@ QBCore.Functions.CreateCallback('poppy:process', function(source, cb)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
 	 
-	if Player.PlayerData.item ~= nil and next(Player.PlayerData.items) ~= nil then
+	if Player.PlayerData.items ~= nil and next(Player.PlayerData.items) ~= nil then
 		for k, v in pairs(Player.PlayerData.items) do
 		    if Player.Playerdata.items[k] ~= nil then
 				if Player.Playerdata.items[k].name == "cannabis" then
