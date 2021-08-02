@@ -2,7 +2,7 @@ fx_version 'cerulean'
 
 game 'gta5'
 
-description 'NTRP-FRAGWEED'
+description 'QB-WeedPicking'
 
 server_scripts {
 	'config.lua',
