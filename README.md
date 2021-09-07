@@ -36,7 +36,7 @@ end
 
 (This at the Bottom)
 
-
+```lua
 QBCore.Functions.SpawnObject = function(model, coords, cb)
     local model = (type(model) == 'number' and model or GetHashKey(model))
 
@@ -50,7 +50,8 @@ QBCore.Functions.SpawnObject = function(model, coords, cb)
         end
     end)
 end
-
+```
+```lua
 QBCore.Functions.SpawnLocalObject = function(model, coords, cb)
     local model = (type(model) == 'number' and model or GetHashKey(model))
 
@@ -64,8 +65,10 @@ QBCore.Functions.SpawnLocalObject = function(model, coords, cb)
         end
     end)
 end
-
+```
+```lua
 QBCore.Functions.DeleteObject = function(object)
     SetEntityAsMissionEntity(object, false, true)
     DeleteObject(object)
 end
+```
