@@ -12,7 +12,7 @@ local isPickingUp, isProcessing, isProcessing2 = false, false, false
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded")
 AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
 	CheckCoords()
-	Citizen.Wait(1000)
+	Wait(1000)
 	local coords = GetEntityCoords(PlayerPedId())
 	if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedField.coords, true) < 1000 then
 		SpawnWeedPlants()
@@ -26,7 +26,7 @@ function CheckCoords()
 			if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedField.coords, true) < 1000 then
 				SpawnWeedPlants()
 			end
-			Citizen.Wait(1 * 60000)
+			Wait(1 * 60000)
 		end
 	end)
 end
@@ -38,7 +38,7 @@ AddEventHandler('onResourceStart', function(resource)
 end)
 Citizen.CreateThread(function()--weed
 	while true do
-		Citizen.Wait(10)
+		Wait(10)
 
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
@@ -81,7 +81,7 @@ Citizen.CreateThread(function()--weed
 				isPickingUp = false
 			end
 		else
-			Citizen.Wait(500)
+			Wait(500)
 		end
 	end
 end)
@@ -95,7 +95,7 @@ AddEventHandler('onResourceStop', function(resource)
 end)
 function SpawnWeedPlants()
 	while spawnedWeed < 20 do
-		Citizen.Wait(1)
+		Wait(1)
 		local weedCoords = GenerateWeedCoords()
 
 		QBCore.Functions.SpawnLocalObject('prop_weed_02', weedCoords, function(obj)
@@ -107,7 +107,7 @@ function SpawnWeedPlants()
 			spawnedWeed = spawnedWeed + 1
 		end)
 	end
-	Citizen.Wait(45 * 60000)
+	Wait(45 * 60000)
 end
 
 function ValidateWeedCoord(plantCoord)
@@ -132,14 +132,14 @@ end
 
 function GenerateWeedCoords()
 	while true do
-		Citizen.Wait(1)
+		Wait(1)
 
 		local weedCoordX, weedCoordY
 
 		math.randomseed(GetGameTimer())
 		local modX = math.random(-10, 10)
 
-		Citizen.Wait(100)
+		Wait(100)
 
 		math.randomseed(GetGameTimer())
 		local modY = math.random(-10, 10)
@@ -172,10 +172,10 @@ end
 
 Citizen.CreateThread(function()
 	while QBCore == nil do
-		Citizen.Wait(200)
+		Wait(200)
 	end
 	while true do
-		Citizen.Wait(10)
+		Wait(10)
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
 
@@ -199,16 +199,16 @@ Citizen.CreateThread(function()
 				end, 'cannabis')
 				
 				while(not s1) do
-					Citizen.Wait(100)
+					Wait(100)
 				end
-				Citizen.Wait(100)
+				Wait(100)
 				QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
 					hasBag = result
 					s2 = true
 				end, 'empty_weed_bag')
 				
 				while(not s2) do
-					Citizen.Wait(100)
+					Wait(100)
 				end
 
 				if (hasWeed and hasBag) then
@@ -222,7 +222,7 @@ Citizen.CreateThread(function()
 				end
 			end
 		else
-			Citizen.Wait(500)
+			Wait(500)
 		end
 	end
 end)
@@ -246,7 +246,7 @@ function Processweed()
 		local timeLeft = Config.Delays.WeedProcessing / 1000
 
 		while timeLeft > 0 do
-			Citizen.Wait(1000)
+			Wait(1000)
 			timeLeft = timeLeft - 1
 
 			if GetDistanceBetweenCoords(GetEntityCoords(playerPed), Config.CircleZones.WeedProcessing.coords, false) > 4 then
@@ -264,10 +264,10 @@ end
 
 Citizen.CreateThread(function()
 	while QBCore == nil do
-		Citizen.Wait(200)
+		Wait(200)
 	end
 	while true do
-		Citizen.Wait(10)
+		Wait(10)
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
 
@@ -292,7 +292,7 @@ Citizen.CreateThread(function()
 				end, 'weed_bag')
 				
 				while(not s3) do
-					Citizen.Wait(100)
+					Wait(100)
 				end
 				
 
@@ -307,7 +307,7 @@ Citizen.CreateThread(function()
 				end
 			end
 		else
-			Citizen.Wait(500)
+			Wait(500)
 		end
 	end
 end)
@@ -332,7 +332,7 @@ function SellDrug()
 		local timeLeft = Config.Delays.WeedProcessing / 1000
 
 		while timeLeft > 0 do
-			Citizen.Wait(500)
+			Wait(500)
 			timeLeft = timeLeft - 1
 
 			if GetDistanceBetweenCoords(GetEntityCoords(playerPed), Config.CircleZones.WeedProcessing.coords, false) > 4 then
