@@ -1,6 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-local itemcraft = 'black_money'
+local itemcraft = 'markedbills'
 
 RegisterServerEvent('qb-weedpicking:pickedUpCannabis') --hero
 AddEventHandler('qb-weedpicking:pickedUpCannabis', function()
