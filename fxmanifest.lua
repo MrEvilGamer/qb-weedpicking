@@ -13,5 +13,3 @@ client_scripts {
 	'config.lua',
 	'client/weedplant.lua'
 }
-
-shared_script '@qb-core/import.lua'
