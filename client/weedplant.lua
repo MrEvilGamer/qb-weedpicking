@@ -19,7 +19,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
 end)
 
 function CheckCoords()
-	Citizen.CreateThread(function()
+	CreateThread(function()
 		while true do
 			local coords = GetEntityCoords(PlayerPedId())
 			if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedField.coords, true) < 1000 then
@@ -35,7 +35,7 @@ AddEventHandler('onResourceStart', function(resource)
 		CheckCoords()
 	end
 end)
-Citizen.CreateThread(function()--weed
+CreateThread(function()--weed
 	while true do
 		Wait(10)
 
@@ -169,7 +169,7 @@ function GetCoordZWeed(x, y)
 	return 31.85
 end
 
-Citizen.CreateThread(function()
+CreateThread(function()
 	while QBCore == nil do
 		Wait(200)
 	end
@@ -261,7 +261,7 @@ function Processweed()
 	isProcessing = false
 end
 
-Citizen.CreateThread(function()
+CreateThread(function()
 	while QBCore == nil do
 		Wait(200)
 	end
