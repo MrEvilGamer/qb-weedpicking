@@ -9,8 +9,7 @@ local weedPlants = {}
 
 local isPickingUp, isProcessing, isProcessing2 = false, false, false
 
-RegisterNetEvent("QBCore:Client:OnPlayerLoaded")
-AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
 	CheckCoords()
 	Wait(1000)
 	local coords = GetEntityCoords(PlayerPedId())
