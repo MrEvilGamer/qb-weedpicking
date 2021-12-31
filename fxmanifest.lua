@@ -13,3 +13,5 @@ client_scripts {
 	'config.lua',
 	'client/weedplant.lua'
 }
+
+lua54 'yes'
