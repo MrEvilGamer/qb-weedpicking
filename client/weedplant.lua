@@ -1,5 +1,44 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
+function SpawnObject()
+    QBCore.Functions.SpawnObject = function(model, coords, cb)
+        local model = (type(model) == 'number' and model or GetHashKey(model))
+
+        CreateThread(function()
+            RequestModel(model)
+            local obj = CreateObject(model, coords.x, coords.y, coords.z, true, false, true)
+            SetModelAsNoLongerNeeded(model)
+
+            if cb then
+                cb(obj)
+            end
+        end)
+    end
+end
+
+function SpawnLocalObject()
+    QBCore.Functions.SpawnLocalObject = function(model, coords, cb)
+        local model = (type(model) == 'number' and model or GetHashKey(model))
+
+        CreateThread(function()
+            RequestModel(model)
+            local obj = CreateObject(model, coords.x, coords.y, coords.z, false, false, true)
+            SetModelAsNoLongerNeeded(model)
+
+            if cb then
+                cb(obj)
+            end
+        end)
+    end
+end
+
+function DeleteObject()
+    QBCore.Functions.DeleteObject = function(object)
+        SetEntityAsMissionEntity()
+        DeleteObject(object)
+    end
+end
+
 isLoggedIn = true
 
 local menuOpen = false
@@ -67,7 +106,7 @@ CreateThread(function()--weed
 					disableInventory = true,
 				}, {}, {}, {}, function() -- Done
 					ClearPedTasks(PlayerPedId())
-					QBCore.Functions.DeleteObject(nearbyObject)
+					DeleteObject(nearbyObject)
 
 					table.remove(weedPlants, nearbyID)
 					spawnedWeed = spawnedWeed - 1
@@ -88,7 +127,7 @@ end)
 AddEventHandler('onResourceStop', function(resource)
 	if resource == GetCurrentResourceName() then
 		for k, v in pairs(weedPlants) do
-			QBCore.Functions.DeleteObject(v)
+			DeleteObject()
 		end
 	end
 end)
@@ -97,7 +136,7 @@ function SpawnWeedPlants()
 		Wait(1)
 		local weedCoords = GenerateWeedCoords()
 
-		QBCore.Functions.SpawnLocalObject('prop_weed_02', weedCoords, function(obj)
+		SpawnLocalObject('prop_weed_02', weedCoords, function(obj)
 			PlaceObjectOnGroundProperly(obj)
 			FreezeEntityPosition(obj, true)
 			
