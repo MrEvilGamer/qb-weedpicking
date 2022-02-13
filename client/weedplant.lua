@@ -74,6 +74,24 @@ AddEventHandler('onResourceStart', function(resource)
 		CheckCoords()
 	end
 end)
+
+function Draw2DText()
+    QBCore.Functions.Draw2DText = function(x, y, text, scale)
+        SetTextFont(4)
+        SetTextProportional(7)
+        SetTextScale(scale, scale)
+        SetTextColour(255, 255, 255, 255)
+        SetTextDropShadow(0, 0, 0, 0,255)
+        SetTextDropShadow()
+        SetTextEdge(4, 0, 0, 0, 255)
+        SetTextOutline()
+        SetTextCentre(true)
+        SetTextEntry("STRING")
+        AddTextComponentString(text)
+        DrawText(x, y)
+    end
+end
+
 CreateThread(function()--weed
 	while true do
 		Wait(10)
@@ -92,7 +110,7 @@ CreateThread(function()--weed
 		if nearbyObject and IsPedOnFoot(playerPed) then
 
 			if not isPickingUp then
-				QBCore.Functions.Draw2DText(0.5, 0.88, 'Press ~g~[E]~w~ to pickup Cannabis', 0.4)
+				Draw2DText(0.5, 0.88, 'Press ~g~[E]~w~ to pickup Cannabis', 0.4)
 			end
 
 			if IsControlJustReleased(0, 38) and not isPickingUp then
