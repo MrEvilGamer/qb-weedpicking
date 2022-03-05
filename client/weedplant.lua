@@ -1,37 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-function SpawnObject()
-    QBCore.Functions.SpawnObject = function(model, coords, cb)
-        local model = (type(model) == 'number' and model or GetHashKey(model))
-
-        CreateThread(function()
-            RequestModel(model)
-            local obj = CreateObject(model, coords.x, coords.y, coords.z, true, false, true)
-            SetModelAsNoLongerNeeded(model)
-
-            if cb then
-                cb(obj)
-            end
-        end)
-    end
-end
-
-function SpawnLocalObject()
-    QBCore.Functions.SpawnLocalObject = function(model, coords, cb)
-        local model = (type(model) == 'number' and model or GetHashKey(model))
-
-        CreateThread(function()
-            RequestModel(model)
-            local obj = CreateObject(model, coords.x, coords.y, coords.z, false, false, true)
-            SetModelAsNoLongerNeeded(model)
-
-            if cb then
-                cb(obj)
-            end
-        end)
-    end
-end
-
 function DeleteObject()
     QBCore.Functions.DeleteObject = function(object)
         SetEntityAsMissionEntity()
@@ -75,23 +43,6 @@ AddEventHandler('onResourceStart', function(resource)
 	end
 end)
 
-function Draw2DText()
-    QBCore.Functions.Draw2DText = function(x, y, text, scale)
-        SetTextFont(4)
-        SetTextProportional(7)
-        SetTextScale(scale, scale)
-        SetTextColour(255, 255, 255, 255)
-        SetTextDropShadow(0, 0, 0, 0,255)
-        SetTextDropShadow()
-        SetTextEdge(4, 0, 0, 0, 255)
-        SetTextOutline()
-        SetTextCentre(true)
-        SetTextEntry("STRING")
-        AddTextComponentString(text)
-        DrawText(x, y)
-    end
-end
-
 CreateThread(function()--weed
 	while true do
 		Wait(10)
@@ -99,8 +50,8 @@ CreateThread(function()--weed
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
 		local nearbyObject, nearbyID
-		
-		
+
+
 		for i=1, #weedPlants, 1 do
 			if GetDistanceBetweenCoords(coords, GetEntityCoords(weedPlants[i]), false) < 1 then
 				nearbyObject, nearbyID = weedPlants[i], i
@@ -110,7 +61,7 @@ CreateThread(function()--weed
 		if nearbyObject and IsPedOnFoot(playerPed) then
 
 			if not isPickingUp then
-				Draw2DText(0.5, 0.88, 'Press ~g~[E]~w~ to pickup Cannabis', 0.4)
+				QBCore.Functions.Draw2DText(0.5, 0.88, 'Press ~g~[E]~w~ to pickup Cannabis', 0.4)
 			end
 
 			if IsControlJustReleased(0, 38) and not isPickingUp then
@@ -154,10 +105,10 @@ function SpawnWeedPlants()
 		Wait(1)
 		local weedCoords = GenerateWeedCoords()
 
-		SpawnLocalObject('prop_weed_02', weedCoords, function(obj)
+		QBCore.Functions.SpawnLocalObject('prop_weed_02', weedCoords, function(obj)
 			PlaceObjectOnGroundProperly(obj)
 			FreezeEntityPosition(obj, true)
-			
+
 
 			table.insert(weedPlants, obj)
 			spawnedWeed = spawnedWeed + 1
@@ -238,7 +189,7 @@ CreateThread(function()
 		if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedProcessing.coords, true) < 5 then
 			DrawMarker(2, Config.CircleZones.WeedProcessing.coords.x, Config.CircleZones.WeedProcessing.coords.y, Config.CircleZones.WeedProcessing.coords.z - 0.2 , 0, 0, 0, 0, 0, 0, 0.3, 0.2, 0.15, 255, 0, 0, 100, 0, 0, 0, true, 0, 0, 0)
 
-			
+
 			if not isProcessing and GetDistanceBetweenCoords(coords, Config.CircleZones.WeedProcessing.coords, true) <1 then
 				QBCore.Functions.DrawText3D(Config.CircleZones.WeedProcessing.coords.x, Config.CircleZones.WeedProcessing.coords.y, Config.CircleZones.WeedProcessing.coords.z, 'Press ~g~[E]~w~ to Process')
 			end
@@ -253,7 +204,7 @@ CreateThread(function()
 					hasWeed = result
 					s1 = true
 				end, 'cannabis')
-				
+
 				while(not s1) do
 					Wait(100)
 				end
@@ -262,7 +213,7 @@ CreateThread(function()
 					hasBag = result
 					s2 = true
 				end, 'empty_weed_bag')
-				
+
 				while(not s2) do
 					Wait(100)
 				end
@@ -314,7 +265,7 @@ function Processweed()
 	end, function()
 		ClearPedTasks(PlayerPedId())
 	end) -- Cancel
-	
+
 	isProcessing = false
 end
 
@@ -330,7 +281,7 @@ CreateThread(function()
 		if GetDistanceBetweenCoords(coords, Config.CircleZones.DrugDealer.coords, true) < 5 then
 			DrawMarker(2, Config.CircleZones.DrugDealer.coords.x, Config.CircleZones.DrugDealer.coords.y, Config.CircleZones.DrugDealer.coords.z - 0.2 , 0, 0, 0, 0, 0, 0, 0.3, 0.2, 0.15, 255, 0, 0, 100, 0, 0, 0, true, 0, 0, 0)
 
-			
+
 			if not isProcessing2 and GetDistanceBetweenCoords(coords, Config.CircleZones.DrugDealer.coords, true) <1 then
 				QBCore.Functions.DrawText3D(Config.CircleZones.DrugDealer.coords.x, Config.CircleZones.DrugDealer.coords.y, Config.CircleZones.DrugDealer.coords.z, 'Press ~g~[E]~w~ to Sell')
 			end
@@ -339,18 +290,18 @@ CreateThread(function()
 				local hasWeed2 = false
 				local hasBag2 = false
 				local s3 = false
-				
+
 				QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
 					hasWeed2 = result
 					hasBag2 = result
 					s3 = true
-					
+
 				end, 'weed_bag')
-				
+
 				while(not s3) do
 					Wait(100)
 				end
-				
+
 
 				if (hasWeed2) then
 					SellDrug()
