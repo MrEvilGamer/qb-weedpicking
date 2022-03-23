@@ -1,12 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-function DeleteObject()
-    QBCore.Functions.DeleteObject = function(object)
-        SetEntityAsMissionEntity()
-        DeleteObject(object)
-    end
-end
-
 isLoggedIn = true
 
 local menuOpen = false
@@ -75,7 +68,7 @@ CreateThread(function()--weed
 					disableInventory = true,
 				}, {}, {}, {}, function() -- Done
 					ClearPedTasks(PlayerPedId())
-					DeleteObject(nearbyObject)
+					QBCore.Functions.DeleteObject(nearbyObject)
 
 					table.remove(weedPlants, nearbyID)
 					spawnedWeed = spawnedWeed - 1
@@ -96,7 +89,7 @@ end)
 AddEventHandler('onResourceStop', function(resource)
 	if resource == GetCurrentResourceName() then
 		for k, v in pairs(weedPlants) do
-			DeleteObject()
+			QBCore.Functions.DeleteObject
 		end
 	end
 end)
