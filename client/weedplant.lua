@@ -38,7 +38,7 @@ end)
 
 CreateThread(function()--weed
 	while true do
-		Wait(10)
+		Wait(0)
 
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
