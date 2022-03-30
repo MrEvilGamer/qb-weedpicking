@@ -89,7 +89,7 @@ end)
 AddEventHandler('onResourceStop', function(resource)
 	if resource == GetCurrentResourceName() then
 		for k, v in pairs(weedPlants) do
-			QBCore.Functions.DeleteObject
+			QBCore.Functions.DeleteObject(nearbyObject)
 		end
 	end
 end)
